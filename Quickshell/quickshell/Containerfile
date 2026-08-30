@@ -1,0 +1,48 @@
+FROM env-quickshell
+
+RUN dnf install -y \
+    rpm-build \
+    rpmdevtools \
+    cli11-devel \
+    dbus-devel \
+    jemalloc-devel \
+    pam-devel \
+    pipewire-devel \
+    polkit-devel \
+    qt6-qtbase-devel \
+    qt6-qtbase-private-devel \
+    qt6-qtdeclarative-devel \
+    qt6-qtdeclarative-private-devel \
+    qt6-qtshadertools-devel \
+    qt6-qtwayland-devel
+
+ARG WORKING_PROJECT=quickshell
+ARG WORKING_REPO=https://github.com/quickshell-mirror/quickshell.git
+ARG WORKING_REF=master
+
+WORKDIR /src
+
+RUN git clone "$WORKING_REPO" repo \
+    && cd repo \
+    && git checkout "$WORKING_REF" \
+    && VERSION=$(sed -nE 's/^[[:space:]]*project\([^)]*VERSION[[:space:]]+"?([0-9.]+)"?.*$/\1/p' CMakeLists.txt) \
+    && git archive \
+        --format=tar.gz \
+        --prefix=${WORKING_PROJECT}-${VERSION}/ \
+        -o /src/repo.tar.gz \
+        HEAD \
+    && echo "$VERSION" > /src/repo-version \
+    && echo "$WORKING_PROJECT" > /src/repo-project
+
+COPY rpm.spec /root/rpmbuild/SPECS/rpm.spec
+
+CMD dnf install -y /rpms/x86_64/cpptrace-git-*.rpm \
+    && mkdir -p /rpms \
+    && rpmbuild \
+        -bb \
+        /root/rpmbuild/SPECS/rpm.spec \
+        --define "_sourcedir /src" \
+        --define "_rpmdir /rpms" \
+        --define "_srcrpmdir /rpms" \
+        --define "upstream_version $(cat /src/repo-version)" \
+        --define "upstream_project $(cat /src/repo-project)"

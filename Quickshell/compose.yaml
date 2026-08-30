@@ -15,3 +15,12 @@ services:
     volumes:
       - "$HOME/Projects/RPMS:/rpms:Z"
 
+  quickshell:
+    image: quickshell-git
+    build:
+      context: "$HOME/Projects/Podman/Quickshell/quickshell"
+      dockerfile: "$HOME/Projects/Podman/Quickshell/quickshell/Containerfile"
+    volumes:
+      - "$HOME/Projects/RPMS:/rpms:Z"
+    depends_on:
+      - cpptrace
