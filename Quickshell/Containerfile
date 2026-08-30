@@ -1,0 +1,34 @@
+FROM env-fedora
+
+RUN dnf install -y \
+    rpm-build \
+    rpmdevtools \
+    wayland-devel \
+    wayland-protocols-devel \
+    pugixml-devel \
+    pixman-devel \
+    libseat-devel \
+    libinput-devel \
+    libdrm-devel \
+    mesa-libgbm-devel \
+    libdisplay-info-devel \
+    hwdata-devel \
+    libzip-devel \
+    cairo-devel \
+    librsvg2-devel \
+    tomlplusplus-devel \
+    libjpeg-turbo-devel \
+    libwebp-devel \
+    libxkbcommon-devel \
+    libuuid-devel \
+    libXcursor-devel \
+    libeis-devel \
+    re2-devel \
+    mesa-libEGL-devel \
+    pango-devel \
+    iniparser-devel \
+    libunwind-devel
+
+RUN dnf install -y \
+    libdwarf-devel \
+    libzstd-devel

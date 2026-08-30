@@ -1,0 +1,8 @@
+name: quickshell
+
+services:
+  env:
+    image: env-quickshell
+    build:
+      context: "$HOME/Projects/Podman/Quickshell"
+      dockerfile: "$HOME/Projects/Podman/Quickshell/Containerfile"
