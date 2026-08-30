@@ -6,3 +6,12 @@ services:
     build:
       context: "$HOME/Projects/Podman/Quickshell"
       dockerfile: "$HOME/Projects/Podman/Quickshell/Containerfile"
+
+  cpptrace:
+    image: cpptrace-git
+    build:
+      context: "$HOME/Projects/Podman/Quickshell/cpptrace"
+      dockerfile: "$HOME/Projects/Podman/Quickshell/cpptrace/Containerfile"
+    volumes:
+      - "$HOME/Projects/RPMS:/rpms:Z"
+
