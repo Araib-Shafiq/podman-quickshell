@@ -1,0 +1,10 @@
+FROM fedora:44
+
+RUN dnf install -y \
+    gcc \
+    gcc-c++ \
+    cmake \
+    ninja-build \
+    pkg-config \
+    git \
+    && dnf clean all

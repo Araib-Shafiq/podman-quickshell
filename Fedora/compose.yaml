@@ -1,0 +1,7 @@
+name: fedora
+
+services:
+  env-fedora:
+    image: env-fedora
+    build:
+      dockerfile: "$HOME/Projects/Podman/Fedora/Containerfile"
